@@ -5,11 +5,15 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <SongCard 
-        image={data.album.images[1].url} 
-        title={data.name} 
-        singer={data.artists[0].name}
-      />
+      <div className="container">
+        { data.map((it) => 
+          <SongCard 
+            image={it.album.images[1].url} 
+            title={it.name} 
+            singer={it.artists[0].name}
+          />) 
+        }
+      </div>
     </div>
   );
 }
