@@ -3,15 +3,15 @@ import './style.css'
 
 const SongCard = ({ image, title, singer }) => {
   return (
-    <div class="card">
+    <div className="card">
         <img
             src={image}
             width="180"
             alt='album'
         />
-        <h3 class="playlist-title">{title}</h3>
-        <p class="playlist-singer">{singer}</p>
-        <button class="playlist-button">Select</button>
+        <h3 className="playlist-title">{title}</h3>
+        <p className="playlist-singer">{singer}</p>
+        <button className="playlist-button">Select</button>
     </div>
   )
 }

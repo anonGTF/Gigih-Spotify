@@ -1,0 +1,12 @@
+.placeholder p {
+    margin-top: -20px;
+    color: #757575;
+    font-size: large;
+    font-weight: bold;
+}
+
+.placeholder .message {
+    margin-top: -15px;
+    color: #757575;
+    font-weight: normal;
+}
