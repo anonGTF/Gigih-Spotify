@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 
-const SongCard = ({ image, title, singer }) => {
+const SongCard = ({ image, title, singer, isSelected, onSelect }) => {
   return (
     <div className="card">
         <img
@@ -11,7 +11,7 @@ const SongCard = ({ image, title, singer }) => {
         />
         <h3 className="playlist-title">{title}</h3>
         <p className="playlist-singer">{singer}</p>
-        <button className="playlist-button">Select</button>
+        <button className="playlist-button" onClick={onSelect}>{ isSelected ? "Deselect" : "Select" }</button>
     </div>
   )
 }
