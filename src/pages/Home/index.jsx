@@ -43,7 +43,11 @@ const Home = () => {
                         title={it.name} 
                         singer={it.artists[0].name}
                         isSelected={selected.includes(it.uri)}
-                        onSelect={() => setSelected(prev => [...prev, it.uri])}
+                        onSelect={isSelected => 
+                            isSelected ? 
+                            setSelected(prev => prev.filter(item => item != it.uri)) : 
+                            setSelected(prev => [...prev, it.uri])
+                        }
                     />) 
                 }
                 { (results.length === 0 && error === "") && 
