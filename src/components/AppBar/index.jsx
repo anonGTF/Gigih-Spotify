@@ -3,7 +3,7 @@ import SearchBar from '../SearchBar'
 import { getData } from '../../utils'
 import './style.css'
 
-const AppBar = ({ token, onResult, onLogout }) => {
+const AppBar = ({ token, onResult, onCreatePlaylist, onLogout }) => {
     const login = () => {
         const callbackUrl = "http://localhost:3000/"
         const clientId = process.env.REACT_APP_SPOTIFY_ID
@@ -49,7 +49,14 @@ const AppBar = ({ token, onResult, onLogout }) => {
     return (
         <div className="appbar">
             <SearchBar onSearch={search}/>
-            { token === "" ? <button onClick={login}>Login</button> : <button onClick={logout}>Logout</button>}
+            <div className="menu">
+                <button className="btn" onClick={onCreatePlaylist}>Create Playlist</button>
+                <button className="btn-text">My Playlist</button>
+                { token === "" ? 
+                    <button className="btn-text" onClick={login}>Login</button> : 
+                    <button className="btn-text" onClick={logout}>Logout</button>
+                }
+            </div>
         </div>
     )
 }

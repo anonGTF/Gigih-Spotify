@@ -5,3 +5,19 @@
     align-items: center;
     min-height: 100vh;
 }
+
+.btn-create {
+    background-color: #1CCA5C;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.btn-create:hover {
+    background-color: #20dd65;
+}
