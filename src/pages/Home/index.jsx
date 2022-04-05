@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { setId, setToken, resetUser } from '../../store/user-slice';
 import SongCard from '../../components/SongCard';
 import Placeholder from '../../components/Placeholder';
 import AppBar from '../../components/AppBar'
@@ -9,8 +11,8 @@ import { getData, postData } from '../../utils'
 import './style.css'
 
 const Home = () => {
-    const [token, setToken] = useState("")
-    const [userId, setUserId] = useState("")
+    const dispatch = useDispatch()
+    const { id, token } = useSelector(state => state.user)
     const [results, setResults] = useState([])
     const [selected, setSelected] = useState([])
     const [title, setTitle] = useState("")
@@ -24,7 +26,7 @@ const Home = () => {
     }
 
     const reset = () => {
-        setToken("")
+        dispatch(resetUser())
         setResults([])
         setSelected([])
         setTitle("")            
@@ -50,7 +52,7 @@ const Home = () => {
     const getCurrentUser = async () => {
         try {
             const response = await getData("https://api.spotify.com/v1/me", token)
-            setUserId(response.id)
+            dispatch(setId(response.id))
         } catch (error) {
             setError(error.message)
         }
@@ -58,7 +60,7 @@ const Home = () => {
 
     const createPlaylist = async () => {
         try {
-            const response = await postData(`https://api.spotify.com/v1/users/${userId}/playlists`, token, {
+            const response = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, {
                 name: title,
                 description: description,
                 public: false,
@@ -81,13 +83,12 @@ const Home = () => {
 
     useEffect(() => {
         const access_token = new URLSearchParams(window.location.hash).get('#access_token');
-        setToken(access_token ?? "");
+        dispatch(setToken(access_token ?? ""))
     }, [])
 
     return (
         <>
             <AppBar 
-                token={token} 
                 onResult={handleResult}
                 onCreatePlaylist={openModal}
                 onLogout={reset}

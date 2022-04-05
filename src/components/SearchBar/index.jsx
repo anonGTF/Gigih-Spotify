@@ -1,11 +1,19 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setQuery } from '../../store/query-slice'
 import './style.css'
 
 const SearchBar = ({ onSearch }) => {
+    const query = useSelector(state => state.query.value)
+    const dispatch = useDispatch()
   
+    const handleChange = (e) => {
+        dispatch(setQuery(e.target.value))
+    }
+
     const onTrigger = (e) => {
         e.preventDefault();
-        onSearch(e.target.query.value);
+        onSearch();
     }
   
     return (
@@ -15,7 +23,9 @@ const SearchBar = ({ onSearch }) => {
             <input 
                 className="input-field" 
                 type="text" 
-                name="query" 
+                name="query"
+                value={query}
+                onChange={handleChange}
                 placeholder="Search song name..." 
                 onKeyPress={(e) => e.key === 'Enter' && onTrigger}
             />

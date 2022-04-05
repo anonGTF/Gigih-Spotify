@@ -1,9 +1,15 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { resetQuery } from '../../store/query-slice'
 import SearchBar from '../SearchBar'
 import { getData } from '../../utils'
 import './style.css'
 
-const AppBar = ({ token, onResult, onCreatePlaylist, onLogout }) => {
+const AppBar = ({ onResult, onCreatePlaylist, onLogout }) => {
+    const token = useSelector(state => state.user.token)
+    const query = useSelector(state => state.query.value)
+    const dispatch = useDispatch()
+
     const login = () => {
         const callbackUrl = "http://localhost:3000/"
         const clientId = process.env.REACT_APP_SPOTIFY_ID
@@ -18,7 +24,7 @@ const AppBar = ({ token, onResult, onCreatePlaylist, onLogout }) => {
         window.location.replace("http://localhost:3000/")
     }
 
-    const validate = (query) => {
+    const validate = () => {
         if (token === "") {
             alert("Please login first!");
             return false
@@ -32,8 +38,8 @@ const AppBar = ({ token, onResult, onCreatePlaylist, onLogout }) => {
         return true
     }
 
-    const search = async (query) => {
-        if (!validate(query)) return
+    const search = async () => {
+        if (!validate()) return
         try {
             const url = `https://api.spotify.com/v1/search?q=${query}&type=track`
             const response = await getData(url, token)
@@ -43,6 +49,8 @@ const AppBar = ({ token, onResult, onCreatePlaylist, onLogout }) => {
             onResult({ data: response.tracks.items, error: "" })
         } catch (error) {
             onResult({ data: [], error: error.message })
+        } finally {
+            dispatch(resetQuery())
         }
     }
 
