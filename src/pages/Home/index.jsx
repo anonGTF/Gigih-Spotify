@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setId, setToken, resetUser } from '../../store/user-slice';
+import { resetUser } from '../../store/user-slice';
 import SongCard from '../../components/SongCard';
 import Placeholder from '../../components/Placeholder';
 import AppBar from '../../components/AppBar'
 import Modal from '../../components/Modal'
 import searchAnim from '../../assets/animations/search.json'
 import errorAnim from '../../assets/animations/error.json'
-import { getData, postData } from '../../utils'
+import { postData } from '../../utils'
 import './style.css'
 
 const Home = () => {
@@ -25,8 +25,8 @@ const Home = () => {
         setError(error)
     }
 
-    const reset = () => {
-        dispatch(resetUser())
+    const reset = (isResetUser) => {
+        if (isResetUser) dispatch(resetUser())
         setResults([])
         setSelected([])
         setTitle("")            
@@ -49,15 +49,6 @@ const Home = () => {
         setDescription(e.target.value)
     }
 
-    const getCurrentUser = async () => {
-        try {
-            const response = await getData("https://api.spotify.com/v1/me", token)
-            dispatch(setId(response.id))
-        } catch (error) {
-            setError(error.message)
-        }
-    }
-
     const createPlaylist = async () => {
         try {
             const response = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, {
@@ -69,22 +60,12 @@ const Home = () => {
             postData(`https://api.spotify.com/v1/playlists/${response.id}/tracks`, token, {
                 uris: selected
             })
-            reset()
+            reset(false)
             closeModal()
         } catch (error) {
             setError(error.message)
         }
     }
-
-    useEffect(() => {
-        if (token === "") return
-        getCurrentUser() 
-    }, [token])
-
-    useEffect(() => {
-        const access_token = new URLSearchParams(window.location.hash).get('#access_token');
-        dispatch(setToken(access_token ?? ""))
-    }, [])
 
     return (
         <>
@@ -103,7 +84,7 @@ const Home = () => {
                         isSelected={selected.includes(it.uri)}
                         onSelect={isSelected => 
                             isSelected ? 
-                            setSelected(prev => prev.filter(item => item != it.uri)) : 
+                            setSelected(prev => prev.filter(item => item !== it.uri)) : 
                             setSelected(prev => [...prev, it.uri])
                         }
                     />) 

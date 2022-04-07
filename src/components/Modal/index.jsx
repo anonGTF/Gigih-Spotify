@@ -7,7 +7,7 @@ const Modal = ({ isShow, onClose, title, children }) => {
         <div className="modal-dialog">
             <div className="modal-header">
                 <h2>{title}</h2>
-                <a href="#" className="btn-close" aria-hidden="true" onClick={onClose}>&times;</a>
+                <button className="btn-close" aria-hidden="true" onClick={onClose}>&times;</button>
             </div>
             <div className="modal-body">
                 {children}

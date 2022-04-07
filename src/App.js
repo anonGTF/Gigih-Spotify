@@ -1,15 +1,30 @@
-import { Provider } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 import Home from './pages/Home';
-import store from './store'
+import Login from "./pages/Login";
 import './App.css';
 
 function App() {
+  const { id, token } = useSelector(state => state.user)
+
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Home />
-      </div>
-    </Provider>
+    <div className="App">
+      <Router>
+        <Switch>
+          <Route path="/create-playlist">
+            {(id !== "" && token !== "") ? <Home /> : <Redirect exact from="/create-playlist" to="/" />}
+          </Route>
+          <Route path="/">
+            <Login />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

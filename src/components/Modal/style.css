@@ -1,5 +1,8 @@
 .btn-close {
     color: #aaaaaa;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
     font-size: 20px;
     text-decoration: none;
     padding:10px;
