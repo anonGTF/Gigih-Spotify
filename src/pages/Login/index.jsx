@@ -21,29 +21,29 @@ const Login = () => {
     window.location.replace(url);
   }
 
-  const getCurrentUser = async () => {
-    try {
-        const response = await getData("https://api.spotify.com/v1/me", token)
-        dispatch(setId(response.id))
-    } catch (error) {
-        console.log(error.message)
-    }
-  }
-
   useEffect(() => {
-    if (id === "" && token === "") return
+    if (id === "") return
     history.push("/create-playlist")
   }, [id, history])
 
   useEffect(() => {
-      if (token === "") return
-      getCurrentUser()
-  }, [token])
+    const getCurrentUser = async () => {
+      try {
+          const response = await getData("https://api.spotify.com/v1/me", token)
+          dispatch(setId(response.id))
+      } catch (error) {
+          console.log(error.message)
+      }
+    }
+
+    if (token === "") return
+    getCurrentUser()
+  }, [token, dispatch])
 
   useEffect(() => {
       const access_token = new URLSearchParams(window.location.hash).get('#access_token');
       dispatch(setToken(access_token ?? ""))
-  }, [])
+  }, [dispatch])
 
   return (
     <div className='login'>
