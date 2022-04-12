@@ -1,17 +1,42 @@
 .appbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    justify-content: center;
+    align-content: center;
     padding: 10px 20px;
     background-color: #181818;
     position: sticky; 
     top: 0;
 }
 
+@media screen and (max-width: 480px) {
+    .appbar {
+        row-gap: 16px;
+    }
+
+    .search-bar {
+        grid-column: 1 / span 12 !important;
+    }
+    .menu {
+        grid-column: 1 / span 12 !important;
+        justify-self: center !important;
+        gap: 6px !important;
+    }
+    .btn, .btn-text {
+        padding: 10px 8px !important;
+    }
+  }
+
+.search-bar {
+    grid-column: 1 / span 3;
+}
+
 .menu {
     display: inline-flex;
     flex-wrap: wrap;
     gap: 12px;
+    grid-column: -7 / span 6;
+    justify-self: end;
 }
 
 .btn {

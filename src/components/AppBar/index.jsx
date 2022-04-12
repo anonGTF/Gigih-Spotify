@@ -42,7 +42,9 @@ const AppBar = ({ onResult, onCreatePlaylist, onLogout }) => {
 
     return (
         <div className="appbar">
-            <SearchBar onSearch={search}/>
+            <div className="search-bar">
+                <SearchBar onSearch={search}/>
+            </div>
             <div className="menu">
                 <button className="btn" onClick={onCreatePlaylist}>Create Playlist</button>
                 <button className="btn-text">My Playlist</button>
