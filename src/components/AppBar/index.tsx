@@ -1,12 +1,19 @@
-import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { resetQuery } from '../../store/query-slice'
 import SearchBar from '../SearchBar'
-import { getData } from '../../utils'
+import { getData, mapSongResponseToModel } from '../../utils'
+import { RootState } from '../../store'
+import { SongResponse } from '../../model/SongResponse'
 
-const AppBar = ({ onResult, onCreatePlaylist, onLogout }) => {
-    const token = useSelector(state => state.user.token)
-    const query = useSelector(state => state.query.value)
+interface AppBarProps {
+    onResult: (data: { data: Array<any>, error: string }) => void,
+    onCreatePlaylist: () => void,
+    onLogout: (isReset: boolean) => void,
+}
+
+const AppBar = ({ onResult, onCreatePlaylist, onLogout }: AppBarProps) => {
+    const token = useSelector((state: RootState) => state.user.token)
+    const query = useSelector((state: RootState) => state.query.value)
     const dispatch = useDispatch()
 
     const logout = () => {
@@ -27,15 +34,19 @@ const AppBar = ({ onResult, onCreatePlaylist, onLogout }) => {
         if (!validate()) return
         try {
             const url = `https://api.spotify.com/v1/search?q=${query}&type=track`
-            const response = await getData(url, token)
+            const response: SongResponse = await getData(url, token)
             
             if (response.tracks.items.length === 0) throw Error("Result not found")
 
-            onResult({ data: response.tracks.items, error: "" })
-        } catch (error) {
-            onResult({ data: [], error: error.message })
+            onResult({ data: mapSongResponseToModel(response), error: "" })
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                onResult({ data: [], error: error.message })
+            } else {
+                onResult({ data: [], error: "Unknown error" })
+            }
         } finally {
-            dispatch(resetQuery())
+            dispatch(resetQuery(true))
         }
     }
 

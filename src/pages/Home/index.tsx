@@ -8,24 +8,39 @@ import Modal from '../../components/Modal'
 import searchAnim from '../../assets/animations/search.json'
 import errorAnim from '../../assets/animations/error.json'
 import { postData } from '../../utils'
+import { RootState } from '../../store';
+import { Song } from '../../model/Song';
+import { PlaylistResponse } from '../../model/PlaylistResponse';
+
+interface Result {
+    data: Array<Song>,
+    error: string
+}
+
+interface PlaylistBodyParams {
+    name: string,
+    description: string,
+    public: boolean,
+    collaborative: boolean
+}
 
 const Home = () => {
     const dispatch = useDispatch()
-    const { id, token } = useSelector(state => state.user)
-    const [results, setResults] = useState([])
-    const [selected, setSelected] = useState([])
+    const { id, token } = useSelector((state: RootState) => state.user)
+    const [results, setResults] = useState(Array<Song>())
+    const [selected, setSelected] = useState(Array<string>())
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [error, setError] = useState("")
     const [showModal, setShowModal] = useState(false)
 
-    const handleResult = ({ data, error }) => {
+    const handleResult = ({ data, error }: Result) => {
         setResults(data)
         setError(error)
     }
 
-    const reset = (isResetUser) => {
-        if (isResetUser) dispatch(resetUser())
+    const reset = (isResetUser: boolean) => {
+        if (isResetUser) dispatch(resetUser(true))
         setResults([])
         setSelected([])
         setTitle("")            
@@ -40,29 +55,32 @@ const Home = () => {
         setShowModal(false)
     }
 
-    const handleTitleChange = (e) => {
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
     }
 
-    const handleDescChange = (e) => {
+    const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value)
     }
 
     const createPlaylist = async () => {
         try {
-            const response = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, {
+            const body: PlaylistBodyParams = {
                 name: title,
                 description: description,
                 public: false,
                 collaborative: false
-            })
-            postData(`https://api.spotify.com/v1/playlists/${response.id}/tracks`, token, {
-                uris: selected
-            })
+            }
+            const response: PlaylistResponse = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, body)
+            await postData(`https://api.spotify.com/v1/playlists/${response.id}/tracks`, token, { uris: selected })
             reset(false)
             closeModal()
-        } catch (error) {
-            setError(error.message)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message)
+            } else {
+                setError("Unknown error")
+            }
         }
     }
 
@@ -77,9 +95,9 @@ const Home = () => {
                 { (results && error === "") && results.map((it) => 
                     <SongCard 
                         key={it.id}
-                        image={it.album.images[1].url} 
-                        title={it.name} 
-                        singer={it.artists[0].name}
+                        image={it.album} 
+                        title={it.title} 
+                        singer={it.artist}
                         isSelected={selected.includes(it.uri)}
                         onSelect={isSelected => 
                             isSelected ? 
@@ -106,7 +124,7 @@ const Home = () => {
                     value={title} 
                     onChange={handleTitleChange} 
                     placeholder="Title" 
-                    size="20" 
+                    size={20} 
                 /><br />
                 <input 
                     type="text" 
@@ -114,7 +132,7 @@ const Home = () => {
                     value={description} 
                     onChange={handleDescChange} 
                     placeholder="Description" 
-                    size="20" 
+                    size={20} 
                 /><br />
                 <button className="bg-green-100 hover:bg-green-200 text-white border-none px-2 sm:px-4 sm:py-2 font-bold text-sm cursor-pointer rounded-xl" onClick={createPlaylist}>Create</button>
             </Modal>

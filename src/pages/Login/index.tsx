@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setId, setToken } from '../../store/user-slice';
 import { getData } from '../../utils'
 import Placeholder from '../../components/Placeholder'
 import searchAnim from '../../assets/animations/search.json'
+import { RootState } from '../../store';
+import { ProfileResponse } from '../../model/ProfileResponse';
 
 const Login = () => {
   const history = useHistory(); 
   const dispatch = useDispatch()
-  const { id, token } = useSelector(state => state.user)
+  const { id, token } = useSelector((state: RootState) => state.user)
 
   const login = () => {
     const callbackUrl = "http://localhost:3000/"
@@ -28,10 +30,14 @@ const Login = () => {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-          const response = await getData("https://api.spotify.com/v1/me", token)
+          const response: ProfileResponse = await getData("https://api.spotify.com/v1/me", token)
           dispatch(setId(response.id))
-      } catch (error) {
-          console.log(error.message)
+      } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.log(error.message)
+          } else {
+            console.log("Unknown error")
+          }
       }
     }
 

@@ -1,6 +1,12 @@
-import React from 'react'
+interface SongCardProps {
+  image: string,
+  title: string,
+  singer: string,
+  isSelected: boolean,
+  onSelect: (isSelected: boolean) => void,
+}
 
-const SongCard = ({ image, title, singer, isSelected, onSelect }) => {
+const SongCard = ({ image, title, singer, isSelected, onSelect }: SongCardProps) => {
   return (
     <div className="bg-gray-100 hover:bg-gray-200 border border-solid border-gray-150 m-5 p-4 w-48 text-center rounded-lg transition">
         <img

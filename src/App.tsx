@@ -7,10 +7,10 @@ import {
 import { useSelector } from "react-redux";
 import Home from './pages/Home';
 import Login from "./pages/Login";
-// import './App.css';
+import { RootState } from "./store";
 
 function App() {
-  const { id, token } = useSelector(state => state.user)
+  const { id, token } = useSelector((state: RootState) => state.user)
 
   return (
     <div className="App bg-gray-50">

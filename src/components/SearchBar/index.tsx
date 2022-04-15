@@ -1,16 +1,20 @@
-import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../../store'
 import { setQuery } from '../../store/query-slice'
 
-const SearchBar = ({ onSearch }) => {
-    const query = useSelector(state => state.query.value)
+interface SearchBarProps {
+    onSearch: () => void,
+}
+
+const SearchBar = ({ onSearch }: SearchBarProps) => {
+    const query = useSelector((state: RootState) => state.query.value)
     const dispatch = useDispatch()
   
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setQuery(e.target.value))
     }
 
-    const onTrigger = (e) => {
+    const onTrigger = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         onSearch();
     }

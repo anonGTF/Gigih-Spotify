@@ -1,7 +1,12 @@
-import React from 'react'
 import Lottie from 'lottie-react-web'
 
-const Placeholder = ({ anim, title, message }) => {
+interface PlaceholderProps {
+  anim: any,
+  title: string,
+  message?: string,
+}
+
+const Placeholder = ({ anim, title, message }: PlaceholderProps) => {
   return (
     <div className="text-center">
         <Lottie 
