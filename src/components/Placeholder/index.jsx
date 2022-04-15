@@ -1,10 +1,9 @@
 import React from 'react'
 import Lottie from 'lottie-react-web'
-import './style.css'
 
 const Placeholder = ({ anim, title, message }) => {
   return (
-    <div className="placeholder">
+    <div className="text-center">
         <Lottie 
             options={{
                 animationData: anim
@@ -12,8 +11,8 @@ const Placeholder = ({ anim, title, message }) => {
             width="360px"
             height="360px"
         />
-        <p>{title}</p>
-        <p className="message">{message}</p>
+        <p className='-mt-5 text-gray-500 text-2xl font-bold'>{title}</p>
+        <p className="-mt-2 text-gray-500 text-xl">{message}</p>
     </div>
   )
 }

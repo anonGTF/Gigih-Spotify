@@ -8,7 +8,6 @@ import Modal from '../../components/Modal'
 import searchAnim from '../../assets/animations/search.json'
 import errorAnim from '../../assets/animations/error.json'
 import { postData } from '../../utils'
-import './style.css'
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -74,7 +73,7 @@ const Home = () => {
                 onCreatePlaylist={openModal}
                 onLogout={reset}
             />
-            <div className="container">
+            <div className="flex flex-wrap justify-center items-center min-h-screen">
                 { (results && error === "") && results.map((it) => 
                     <SongCard 
                         key={it.id}
@@ -117,7 +116,7 @@ const Home = () => {
                     placeholder="Description" 
                     size="20" 
                 /><br />
-                <button className="btn-create" onClick={createPlaylist}>Create</button>
+                <button className="bg-green-100 hover:bg-green-200 text-white border-none px-2 sm:px-4 sm:py-2 font-bold text-sm cursor-pointer rounded-xl" onClick={createPlaylist}>Create</button>
             </Modal>
         </>
     )

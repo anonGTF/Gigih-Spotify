@@ -7,13 +7,13 @@ import {
 import { useSelector } from "react-redux";
 import Home from './pages/Home';
 import Login from "./pages/Login";
-import './App.css';
+// import './App.css';
 
 function App() {
   const { id, token } = useSelector(state => state.user)
 
   return (
-    <div className="App">
+    <div className="App bg-gray-50">
       <Router>
         <Switch>
           <Route path="/create-playlist">

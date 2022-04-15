@@ -5,7 +5,6 @@ import { setId, setToken } from '../../store/user-slice';
 import { getData } from '../../utils'
 import Placeholder from '../../components/Placeholder'
 import searchAnim from '../../assets/animations/search.json'
-import './style.css'
 
 const Login = () => {
   const history = useHistory(); 
@@ -46,9 +45,9 @@ const Login = () => {
   }, [dispatch])
 
   return (
-    <div className='login'>
+    <div className='h-screen flex flex-col gap-6 justify-center items-center'>
         <Placeholder anim={searchAnim} title="Login and Search Any Songs Around the World" />
-        <button className="btn" onClick={login}>Login</button>
+        <button className="bg-green-100 hover:bg-green-200 text-white border-none px-2 sm:px-4 sm:py-2 font-bold text-sm cursor-pointer rounded-xl" onClick={login}>Login</button>
     </div>
   )
 }

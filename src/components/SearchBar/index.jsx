@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setQuery } from '../../store/query-slice'
-import './style.css'
 
 const SearchBar = ({ onSearch }) => {
     const query = useSelector(state => state.query.value)
@@ -18,10 +17,10 @@ const SearchBar = ({ onSearch }) => {
   
     return (
     <form onSubmit={onTrigger}>
-        <div className="input-icons">
-            <i className="fa fa-search icon" />
+        <div className="w-full">
+            <i className="fa fa-search absolute p-3 text-white w-5 text-center" />
             <input 
-                className="input-field" 
+                className="w-full py-3 px-10 text-white bg-gray-200 border-none text-sm font-bold rounded-2xl border-0" 
                 type="text" 
                 name="query"
                 value={query}

@@ -5,9 +5,9 @@ const Modal = ({ isShow, onClose, title, children }) => {
   return (
     <div className={`modale ${ isShow ? "opened" : "" }`} aria-hidden="true">
         <div className="modal-dialog">
-            <div className="modal-header">
-                <h2>{title}</h2>
-                <button className="btn-close" aria-hidden="true" onClick={onClose}>&times;</button>
+            <div className="py-1 px-3">
+                <h2 className='text-xl py-1 px-3'>{title}</h2>
+                <button className="text-gray-300 hover:text-gray-400 bg-transparent cursor-pointer border-none text-xl p-3 absolute right-2 top-0" aria-hidden="true" onClick={onClose}>&times;</button>
             </div>
             <div className="modal-body">
                 {children}
