@@ -27,7 +27,6 @@ export async function postData<Result, Body>(url: string, token: string, data: B
 }
 
 export function mapSongResponseToModel(song: SongResponse): Array<Song> {
-    console.log(song.tracks.items[0].duration_ms);
     return song.tracks.items.map(item => ({
         id: item.id,
         uri: item.uri,
