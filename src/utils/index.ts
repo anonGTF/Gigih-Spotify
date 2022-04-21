@@ -27,12 +27,34 @@ export async function postData<Result, Body>(url: string, token: string, data: B
 }
 
 export function mapSongResponseToModel(song: SongResponse): Array<Song> {
+    console.log(song.tracks.items[0].duration_ms);
     return song.tracks.items.map(item => ({
         id: item.id,
         uri: item.uri,
         title: item.name,
         artist: item.artists[0].name,
         album: item.album.images[1].url,
+        duration: item.duration_ms,
         isSelected: false
     }) as Song);
+}
+
+export function formatMilliseconds(milliseconds: number): string {
+    function pad(num: number): string {
+        return `${num}`.padStart(2, '0');
+    }
+    const asSeconds = milliseconds / 1000;
+
+    let hours = undefined;
+    let minutes = Math.floor(asSeconds / 60);
+    let seconds = Math.floor(asSeconds % 60);
+
+    if (minutes > 59) {
+        hours = Math.floor(minutes / 60);
+        minutes %= 60;
+    }
+
+    return hours
+        ? `${hours}:${pad(minutes)}:${pad(seconds)}`
+        : `${minutes}:${pad(seconds)}`;
 }

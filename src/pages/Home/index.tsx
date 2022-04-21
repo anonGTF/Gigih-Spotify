@@ -63,7 +63,25 @@ const Home = () => {
         setDescription(e.target.value)
     }
 
+    const validate = (): boolean => {
+        if (title.length === 0) {
+            setError("Title is required")
+            return false
+        }
+        if (description.length === 0) {
+            setError("Description is required")
+            return false
+        }
+        if (title.length <= 10) {
+            setError("Title must be at least 10 characters")
+            return false
+        }
+        return true
+    }
+
     const createPlaylist = async () => {
+        closeModal()
+        if (!validate()) return
         try {
             const body: PlaylistBodyParams = {
                 name: title,
@@ -74,7 +92,7 @@ const Home = () => {
             const response: PlaylistResponse = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, body)
             await postData(`https://api.spotify.com/v1/playlists/${response.id}/tracks`, token, { uris: selected })
             reset(false)
-            closeModal()
+            alert("Playlist created successfully")
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError(error.message)
@@ -98,6 +116,7 @@ const Home = () => {
                         image={it.album} 
                         title={it.title} 
                         singer={it.artist}
+                        duration={it.duration}
                         isSelected={selected.includes(it.uri)}
                         onSelect={isSelected => 
                             isSelected ? 

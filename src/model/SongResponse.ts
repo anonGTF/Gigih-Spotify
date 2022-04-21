@@ -17,7 +17,7 @@ export interface Item {
     artists:          Artist[];
     availableMarkets: string[];
     discNumber:       number;
-    durationMS:       number;
+    duration_ms:       number;
     explicit:         boolean;
     externalIDS:      ExternalIDS;
     externalUrls:     ExternalUrls;

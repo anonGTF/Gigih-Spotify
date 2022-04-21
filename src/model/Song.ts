@@ -4,5 +4,6 @@ export type Song = {
     title: string,
     artist: string,
     album: string,
+    duration: number,
     isSelected: boolean,
 }
