@@ -11,13 +11,13 @@ This is a project to clonse Spotify. With this web app, you can search tracks, s
 
 ## Step to Run This Project
 
-### Clone this Project
+1 Clone this Project
 
-### `npm install`
+2 `npm install`
 
-### Copy .env.example into .env.local
+3 Copy .env.example into .env.local
 
-### Fill Spotify ID and Spotify Secret from your Spotify developer dashboard
+4 Fill Spotify ID and Spotify Secret from your Spotify developer dashboard
 
 ## Getting Started with Create React App
 
