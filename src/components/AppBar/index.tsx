@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { resetQuery } from '../../store/query-slice'
 import SearchBar from '../SearchBar'
 import { getData, mapSongResponseToModel } from '../../utils'
@@ -15,6 +16,7 @@ const AppBar = ({ onResult, onCreatePlaylist, onLogout }: AppBarProps) => {
     const token = useSelector((state: RootState) => state.user.token)
     const query = useSelector((state: RootState) => state.query.value)
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const logout = () => {
         onLogout(true)
@@ -50,6 +52,10 @@ const AppBar = ({ onResult, onCreatePlaylist, onLogout }: AppBarProps) => {
         }
     }
 
+    const goToMyPlaylist = () => {
+        history.push('my-playlist')
+    }
+
     return (
         <div className="gap-y-4 sm:gap-y-0 grid grid-cols-12 justify-center content-center px-5 py-3 bg-gray-100 sticky top-0">
             <div className="col-start-1 col-end-12 sm:col-start-1 sm:col-end-4">
@@ -62,7 +68,12 @@ const AppBar = ({ onResult, onCreatePlaylist, onLogout }: AppBarProps) => {
                 >
                     Create Playlist
                 </button>
-                <button className="bg-gray-100 hover:bg-gray-200 text-green-100 border-none px-2 sm:px-4 sm:py-2 font-bold text-sm cursor-pointer rounded-xl">My Playlist</button>
+                <button 
+                    className="bg-gray-100 hover:bg-gray-200 text-green-100 border-none px-2 sm:px-4 sm:py-2 font-bold text-sm cursor-pointer rounded-xl"
+                    onClick={goToMyPlaylist}
+                >
+                    My Playlist
+                </button>
                 <button className="bg-gray-100 hover:bg-gray-200 text-green-100 border-none px-2 sm:px-4 sm:py-2 font-bold text-sm cursor-pointer rounded-xl" onClick={logout}>Logout</button>
             </div>
         </div>

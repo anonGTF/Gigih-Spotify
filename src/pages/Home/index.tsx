@@ -10,7 +10,7 @@ import errorAnim from '../../assets/animations/error.json'
 import { postData } from '../../utils'
 import { RootState } from '../../store';
 import { Song } from '../../model/Song';
-import { PlaylistResponse } from '../../model/PlaylistResponse';
+import { CreatePlaylistResponse } from '../../model/CreatePlaylistResponse';
 
 interface Result {
     data: Array<Song>,
@@ -89,7 +89,7 @@ const Home = () => {
                 public: false,
                 collaborative: false
             }
-            const response: PlaylistResponse = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, body)
+            const response: CreatePlaylistResponse = await postData(`https://api.spotify.com/v1/users/${id}/playlists`, token, body)
             await postData(`https://api.spotify.com/v1/playlists/${response.id}/tracks`, token, { uris: selected })
             reset(false)
             alert("Playlist created successfully")

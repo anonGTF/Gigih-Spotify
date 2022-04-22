@@ -1,16 +1,25 @@
 export interface PlaylistResponse {
+    href:     string;
+    items:    Playlist[];
+    limit:    number;
+    next:     null;
+    offset:   number;
+    previous: string;
+    total:    number;
+}
+
+export interface Playlist {
     collaborative: boolean;
     description:   string;
-    externalUrls:  ExternalUrls;
-    followers:     Followers;
+    external_urls: ExternalUrls;
     href:          string;
     id:            string;
-    images:        any[];
+    images:        Image[];
     name:          string;
     owner:         Owner;
-    primaryColor:  null;
+    primary_color: null;
     public:        boolean;
-    snapshotID:    string;
+    snapshot_id:   string;
     tracks:        Tracks;
     type:          string;
     uri:           string;
@@ -20,26 +29,22 @@ export interface ExternalUrls {
     spotify: string;
 }
 
-export interface Followers {
-    href:  null;
-    total: number;
+export interface Image {
+    height: number;
+    url:    string;
+    width:  number;
 }
 
 export interface Owner {
-    displayName:  string;
-    externalUrls: ExternalUrls;
-    href:         string;
-    id:           string;
-    type:         string;
-    uri:          string;
+    display_name:  string;
+    external_urls: ExternalUrls;
+    href:          string;
+    id:            string;
+    type:          string;
+    uri:           string;
 }
 
 export interface Tracks {
-    href:     string;
-    items:    any[];
-    limit:    number;
-    next:     null;
-    offset:   number;
-    previous: null;
-    total:    number;
+    href:  string;
+    total: number;
 }

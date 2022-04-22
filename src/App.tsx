@@ -7,6 +7,7 @@ import {
 import { useSelector } from "react-redux";
 import Home from './pages/Home';
 import Login from "./pages/Login";
+import MyPlaylist from "./pages/MyPlaylist";
 import { RootState } from "./store";
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
         <Switch>
           <Route path="/create-playlist">
             {(id !== "" && token !== "") ? <Home /> : <Redirect exact from="/create-playlist" to="/" />}
+          </Route>
+          <Route path="/my-playlist">
+            {(id !== "" && token !== "") ? <MyPlaylist /> : <Redirect exact from="/my-playlist" to="/" />}
           </Route>
           <Route path="/">
             <Login />

@@ -16,7 +16,7 @@ const Login = () => {
   const login = () => {
     const callbackUrl = "http://localhost:3000/"
     const clientId = process.env.REACT_APP_SPOTIFY_ID
-    const scope = "playlist-modify-private"
+    const scope = "playlist-modify-private playlist-read-private"
     const url = `https://accounts.spotify.com/en/authorize?response_type=token&client_id=${clientId}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(callbackUrl)}`
 
     window.location.replace(url);
