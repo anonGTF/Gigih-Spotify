@@ -20,7 +20,7 @@ const AppBar = ({ onResult, onCreatePlaylist, onLogout }: AppBarProps) => {
 
     const logout = () => {
         onLogout(true)
-        window.location.replace("http://localhost:3000/")
+        window.location.replace("https://gigih-spotify.vercel.app/")
     }
 
     const validate = () => {

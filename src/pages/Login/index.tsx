@@ -14,7 +14,7 @@ const Login = () => {
   const { id, token } = useSelector((state: RootState) => state.user)
 
   const login = () => {
-    const callbackUrl = "http://localhost:3000/"
+    const callbackUrl = "https://gigih-spotify.vercel.app/"
     const clientId = process.env.REACT_APP_SPOTIFY_ID
     const scope = "playlist-modify-private playlist-read-private"
     const url = `https://accounts.spotify.com/en/authorize?response_type=token&client_id=${clientId}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(callbackUrl)}`
